@@ -25,6 +25,7 @@ class listener implements EventSubscriberInterface
 	static public function getSubscribedEvents()
 	{
 		return array(
+			'core.user_setup'              => 'load_language_on_setup',
 			"core.memberlist_view_profile" => "render_memberlist_view_profile"
 		);
 	}
@@ -35,6 +36,9 @@ class listener implements EventSubscriberInterface
 	/** @var \phpbb\template\template */
 	protected $template;
 
+	/** @var \phpbb\language\language */
+	protected $lang;
+
 	/** @var string table_prefix */
 	protected $table_prefix;
 
@@ -44,12 +48,27 @@ class listener implements EventSubscriberInterface
 	public function __construct(
         \phpbb\db\driver\driver_interface   $db,
 		\phpbb\template\template 			$template,
+		\phpbb\language\language			$lang,
 											$table_prefix
 	)
 	{
-		$this->db              = $db;
-		$this->template        = $template;
-		$this->table_prefix    = $table_prefix;
+		$this->db           = $db;
+		$this->template     = $template;
+		$this->lang         = $lang;
+		$this->table_prefix = $table_prefix;
+	}
+
+	/**
+	 * Adds local language to global language
+	 */
+	public function load_language_on_setup($event)
+	{
+		$lang_set_ext = $event['lang_set_ext'];
+		$lang_set_ext[] = [
+			'ext_name' => 'ady/viewfriends',
+			'lang_set' => 'common',
+		];
+		$event['lang_set_ext'] = $lang_set_ext;
 	}
 
 	/**
@@ -78,7 +97,8 @@ class listener implements EventSubscriberInterface
 			$this->db->sql_freeresult($zebra_result);
 		}
 
-		$template_data['FRIENDS'] = $friends;
+		$template_data['FRIENDS']    = $friends;
+		$template_data['L_USERNAME'] = $this->lang->lang('L_USERNAME').$member['username'];
         $this->template->assign_vars($template_data);
 	}
 }
