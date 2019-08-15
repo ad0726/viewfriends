@@ -4,13 +4,14 @@
     "description": "Add a friend list to user profiles",
     "homepage": "https://github.com/ad0726",
     "version": "1.0.0",
+    "keywords": ["phpbb", "extension", "viewfriends", "friend", "ady", "friends list", "profile"],
     "time": "2019-08-15",
     "license": "GPL-2.0",
     "authors": [
         {
             "name": "Ady",
             "homepage": "https://github.com/ad0726",
-            "role": "Ady"
+            "role": "Developer"
         }
     ],
     "require": {

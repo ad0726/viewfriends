@@ -1,22 +1,24 @@
 {% if FRIENDS %}
 {% INCLUDECSS '@ady_viewfriends/adyviewfriends.css' %}
-<h3>Les amis de {{ USERNAME }}</h3>
 <div class="panel bg2">
-    {% for user_id, friend in FRIENDS %}
-    <div class="adyviewfriends one-friend">
-        {% set style = "" %}
-        {% if friend.user_colour != "" %}
-            {% set style = "color: #" ~ friend.user_colour ~ "; font-weight: bold;" %}
-        {% endif %}
-        <span style="{{ style }}">{{ friend.username }}</span><br>
-        <a href="/memberlist.php?mode=viewprofile&u={{ user_id }}">
-            {% if friend.user_avatar != "" %}
-            <img src="./download/file.php?avatar={{ friend.user_avatar }}">
-            {% else %}
-            <img src="./ext/mazeltof/memberlistavatar/styles/prosilver/theme/images/no_avatar.gif">
+    <h3>{{ L_USERNAME }}</h3>
+    <div class="inner">
+        {% for user_id, friend in FRIENDS %}
+        <div class="adyviewfriends one-friend">
+            {% set style = "" %}
+            {% if friend.user_colour != "" %}
+                {% set style = "color: #" ~ friend.user_colour ~ "; font-weight: bold;" %}
             {% endif %}
-        </a>
+            <span style="{{ style }}">{{ friend.username }}</span><br>
+            <a href="/memberlist.php?mode=viewprofile&u={{ user_id }}">
+                {% if friend.user_avatar != "" %}
+                <img src="./download/file.php?avatar={{ friend.user_avatar }}">
+                {% else %}
+                <img src="{{ T_THEME_PATH }}/images/no_avatar.gif">
+                {% endif %}
+            </a>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 </div>
 {% endif %}

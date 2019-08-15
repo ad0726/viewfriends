@@ -1,10 +1,11 @@
-div.panel.bg2 {
+div.panel.bg2 div.inner {
     display  : flex;
     flex-wrap: wrap;
 }
 
 div.adyviewfriends.one-friend {
-    margin: 5px;
+    margin    : 5px;
+    text-align: center;
 }
 
 div.adyviewfriends.one-friend span {
