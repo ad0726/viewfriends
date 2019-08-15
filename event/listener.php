@@ -57,40 +57,25 @@ class listener implements EventSubscriberInterface
 	 */
 	public function render_memberlist_view_profile($event)
 	{
-		$member             = $event['member'];
-		$friends            = [];
-		$zebra_result_left  = [];
-		$zebra_result_right = [];
-		$table_zebra        = $this->table_prefix."zebra";
-		$table_users        = $this->table_prefix."users";
-		$sql_user           = "SELECT username, user_avatar, user_colour FROM $table_users WHERE user_id = ";
+		$member       = $event['member'];
+		$friends      = [];
+		$zebra_result = [];
+		$table_zebra  = $this->table_prefix."zebra";
+		$table_users  = $this->table_prefix."users";
+		$sql_user     = "SELECT username, user_avatar, user_colour FROM $table_users WHERE user_id = ";
 
-		$sql                = "SELECT zebra_id FROM $table_zebra WHERE user_id = {$member['user_id']} AND friend = 1";
-		$zebra_result_left  = $this->db->sql_query($sql);
+		$sql          = "SELECT zebra_id FROM $table_zebra WHERE user_id = {$member['user_id']} AND friend = 1";
+		$zebra_result = $this->db->sql_query($sql);
 
-		if ($zebra_result_left->num_rows > 0) {
-			while ($row = $this->db->sql_fetchrow($zebra_result_left)) {
-				$user_result = $this->db->sql_query($sql_user.$row['user_id']);
+		if ($zebra_result->num_rows > 0) {
+			while ($row = $this->db->sql_fetchrow($zebra_result)) {
+				$user_result = $this->db->sql_query($sql_user.$row['zebra_id']);
 				$user        = $this->db->sql_fetchrow($user_result);
 
-				$friends[$row['user_id']] = $user;
+				$friends[$row['zebra_id']] = $user;
 			}
 			$this->db->sql_freeresult($user_result);
-			$this->db->sql_freeresult($zebra_result_left);
-		}
-
-		$sql                = "SELECT user_id FROM $table_zebra WHERE zebra_id = {$member['user_id']} AND friend = 1";
-		$zebra_result_right = $this->db->sql_query($sql);
-
-		if ($zebra_result_right->num_rows > 0) {
-			while ($row = $this->db->sql_fetchrow($zebra_result_right)) {
-				$user_result = $this->db->sql_query($sql_user.$row['user_id']);
-				$user        = $this->db->sql_fetchrow($user_result);
-
-				$friends[$row['user_id']] = $user;
-			}
-			$this->db->sql_freeresult($user_result);
-			$this->db->sql_freeresult($zebra_result_right);
+			$this->db->sql_freeresult($zebra_result);
 		}
 
 		$template_data['FRIENDS'] = $friends;
