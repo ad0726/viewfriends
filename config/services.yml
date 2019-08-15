@@ -1,0 +1,9 @@
+services:
+    ady.viewfriends.listener:
+        class: ady\viewfriends\event\listener
+        arguments:
+            - '@dbal.conn'
+            - '@template'
+            - '%core.table_prefix%'
+        tags:
+            - { name: event.listener }

@@ -1,0 +1,16 @@
+div.panel.bg2 {
+    display  : flex;
+    flex-wrap: wrap;
+}
+
+div.adyviewfriends.one-friend {
+    margin: 5px;
+}
+
+div.adyviewfriends.one-friend span {
+    display: inline-block;
+}
+
+div.adyviewfriends.one-friend img {
+    width: 50px;
+}
