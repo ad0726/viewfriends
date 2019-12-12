@@ -1,3 +1,5 @@
+https://gitlab.com/adynemo/viewfriends
+
 phpBB Extension - viewfriends
 =====================
 
