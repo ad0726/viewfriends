@@ -1,4 +1,4 @@
-https://gitlab.com/adynemo/viewfriends
+Migrate to https://gitlab.com/adynemo/viewfriends
 
 phpBB Extension - viewfriends
 =====================
